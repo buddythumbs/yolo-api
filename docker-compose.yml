@@ -1,0 +1,13 @@
+version: "3"
+services:
+    object-recognition:
+        build: ./src
+        ports:
+            - 80:80
+        volumes: 
+            - /Users/martin/projects/object_detection/artifacts/:/src/outputs
+            - /Users/martin/projects/object_detection/src:/src/
+        # stdin_open: true # docker run -i
+        # tty: true        # docker run -t
+        command: /start-reload.sh
+            
