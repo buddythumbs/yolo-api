@@ -1,6 +1,6 @@
 FROM tiangolo/uvicorn-gunicorn-fastapi:python3.7
 
-COPY . /src
+COPY . /
 
 RUN apt-get update ##[edited]
 RUN apt-get install 'ffmpeg'\
