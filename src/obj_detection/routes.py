@@ -1,5 +1,5 @@
-from fastapi import APIRouter, HTTPException, Depends, File, UploadFile
-from fastapi.responses import FileResponse
+from fastapi import APIRouter, HTTPException, Depends, File, UploadFile, WebSocket
+from fastapi.responses import FileResponse, HTMLResponse
 from obj_detection.object_detection import ObjectRecognizer
 import cv2
 import numpy as np
@@ -36,3 +36,52 @@ def send_file(filename: str):
 def list_files():
     entries = os.listdir(f'{recog.ARTIFACTS_DIR}/')
     return {"files" : entries }
+
+
+# Websocket Route
+ws_router = APIRouter()
+
+html = """
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Chat</title>
+    </head>
+    <body>
+        <h1>WebSocket Chat</h1>
+        <form action="" onsubmit="sendMessage(event)">
+            <input type="text" id="messageText" autocomplete="off"/>
+            <button>Send</button>
+        </form>
+        <ul id='messages'>
+        </ul>
+        <script>
+            var ws = new WebSocket("ws://localhost:80/ws/message");
+            ws.onmessage = function(event) {
+                var messages = document.getElementById('messages')
+                var message = document.createElement('li')
+                var content = document.createTextNode(event.data)
+                message.appendChild(content)
+                messages.appendChild(message)
+            };
+            function sendMessage(event) {
+                var input = document.getElementById("messageText")
+                ws.send(input.value)
+                input.value = ''
+                event.preventDefault()
+            }
+        </script>
+    </body>
+</html>
+"""
+
+@ws_router.get("/")
+def ws_hook_up():
+    return HTMLResponse(html)
+
+@ws_router.websocket("/message")
+async def websocket_endpoint(websocket: WebSocket):
+    await websocket.accept()
+    while True:
+        data = await websocket.receive_text()
+        await websocket.send_text(f"Message text was: {data}")
