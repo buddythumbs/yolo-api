@@ -1,3 +1,11 @@
-artifacts/
+artifacts/outputs/*
+artifacts/config/*
+artifacts/*.mov
+artifacts/*.jpg
+
 
 Pipfile*
+
+.env
+
+**.pyc
