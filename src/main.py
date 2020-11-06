@@ -3,10 +3,6 @@ from obj_detection import router as obj_routes
 
 app = FastAPI()
 
-@app.get("/",tags=["Home"])
-def home_page():
-    return {"docs": "/docs"}
-
 app.include_router(
     obj_routes,
     tags=["Object Detection"],
