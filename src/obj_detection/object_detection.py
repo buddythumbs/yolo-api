@@ -1,4 +1,5 @@
 import cv2
+import os
 import numpy as np
 import sys, getopt
 from pathlib import Path
@@ -9,17 +10,18 @@ class ObjectRecognizer():
     """
 
     _FPS = 5
-    ARTIFACTS_DIR = "outputs"
+    CONFIG_DIR = os.environ.get("CONFIG_DIR", "/outputs")
+    ARTIFACTS_DIR = os.environ.get("ARTIFACTS_DIR", "/outputs")
     cap = None
     out = None
     
     def __init__(self, weights="yolov3.weights", config="yolov3.cfg", classes='coco.names', write=False,show=False):
-        self.net = cv2.dnn.readNet(f"{self.ARTIFACTS_DIR}/{weights}", f"{self.ARTIFACTS_DIR}/{config}")
+        self.net = cv2.dnn.readNet(f"{self.CONFIG_DIR}/{weights}", f"{self.CONFIG_DIR}/{config}")
         self.font = cv2.FONT_HERSHEY_PLAIN
         self.write = write
         self.show = show
 
-        with open(f"{self.ARTIFACTS_DIR}/{classes}", 'r') as f:
+        with open(f"{self.CONFIG_DIR}/{classes}", 'r') as f:
             self.classes = f.read().splitlines()
 
     def detect_objects_in_image(self, image, load=True, name=""):
