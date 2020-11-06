@@ -8,4 +8,4 @@ Pipfile*
 
 .env
 
-**.pyc
+src/__pycache__/*.pyc
