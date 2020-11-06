@@ -3,6 +3,7 @@ from fastapi.responses import FileResponse
 from obj_detection.object_detection import ObjectRecognizer
 import cv2
 import numpy as np
+import os
 
 recog = ObjectRecognizer(write=True)
 
@@ -18,7 +19,7 @@ async def detect_image(file: UploadFile = File(...)):
 @router.post("/video")
 async def detect_video(file: UploadFile = File(...)):
     contents = await file.read()
-    file_saviour = f'outputs/uploaded_{file.filename}'
+    file_saviour = f'{recog.ARTIFACTS_DIR}uploaded_{file.filename}'
     
     with open(file_saviour, 'wb') as vid:
         vid.write(contents)
@@ -27,6 +28,11 @@ async def detect_video(file: UploadFile = File(...)):
 
     return { "file_name": file.filename, 'saved': True, "detections": detections }
 
-@router.get("/processed_file/{filename}")
+@router.get("/processed_files/{filename}")
 def send_file(filename: str):
-    return FileResponse(f'outputs/DETECTED_{filename}')
+    return FileResponse(f'{recog.ARTIFACTS_DIR}/{filename}')
+
+@router.get("/processed_files/")
+def list_files():
+    entries = os.listdir(f'{recog.ARTIFACTS_DIR}/')
+    return {"files" : entries }
