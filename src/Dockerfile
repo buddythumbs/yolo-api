@@ -9,6 +9,6 @@ RUN apt-get install 'ffmpeg'\
 
 WORKDIR /src/
 
-CMD [ "python", "object_detection.py" ]
+# CMD [ "python", "object_detection.py" ]
 COPY requirements.txt /tmp/requirements.txt
 RUN pip install -r /tmp/requirements.txt
