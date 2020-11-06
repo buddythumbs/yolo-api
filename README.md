@@ -55,3 +55,28 @@ This is all setup to be run in local development mode, if you want to build for 
 ```yaml
 command: /start-reload.sh
 ```
+
+# Other
+
+The following lines are included in the Dockerfile as the `openCV` library was unable to load in the inage.
+
+```yaml
+RUN apt-get update ##[edited]
+RUN apt-get install 'ffmpeg'\
+    'libsm6'\ 
+    'libxext6'  -y
+```
+
+The foloowng volumes are mounted in `docker-compose.yml`:
+
+```yaml
+volumes: 
+    - "/Users/martin/projects/object_detection/artifacts/config/:${CONFIG_DIR}"
+    - "/Users/martin/projects/object_detection/artifacts/outputs/:${ARTIFACT_DIR}"
+    - /Users/martin/projects/object_detection/src:/src/
+```
+
+ The first 2 mounts are for the config files (for the yolov3 model) and an output directory for processed images/videos. These are setup on my local machine and need to be managed by me - in order to industrialize this type of system it would be better to use a `bind mount` instead with some 3rd party provider (AWS/Azure/Google cloud). See https://docs.docker.com/storage/volumes/ for more info.
+
+ is for development purposes only, this should be replaced with a proper `bind` mount in production.
+
