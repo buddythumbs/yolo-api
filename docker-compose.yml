@@ -7,10 +7,12 @@ services:
         environment:
             - "CONFIG_DIR=${CONFIG_DIR}"
             - "ARTIFACT_DIR=${ARTIFACT_DIR}"
+            - "OUTPUT_DIR=${OUTPUT_DIR}"
+            - "HOST_CONFIGS=${HOST_CONFIGS}"
         volumes: 
-            - "/Users/martin/projects/object_detection/artifacts/config/:${CONFIG_DIR}"
-            - "/Users/martin/projects/object_detection/artifacts/outputs/:${ARTIFACT_DIR}"
-            - /Users/martin/projects/object_detection/src:/src/
+            - "${HOST_CONFIGS}:${CONFIG_DIR}"
+            - "${OUTPUT_DIR}:${ARTIFACT_DIR}"
+            - "${PWD}/src:/src/"
         # stdin_open: true # docker run -i
         # tty: true        # docker run -t
         command: /start-reload.sh
