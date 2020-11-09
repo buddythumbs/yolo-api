@@ -1,9 +1,11 @@
-from fastapi import APIRouter, HTTPException, Depends, File, UploadFile, WebSocket
-from fastapi.responses import FileResponse, HTMLResponse
-from obj_detection.object_detection import ObjectRecognizer
+import io
 import cv2
 import numpy as np
 import os
+from fastapi import APIRouter, HTTPException, Depends, File, UploadFile, WebSocket
+from fastapi.responses import FileResponse, HTMLResponse
+from obj_detection.object_detection import ObjectRecognizer
+from starlette.responses import StreamingResponse
 
 recog = ObjectRecognizer(write=True)
 

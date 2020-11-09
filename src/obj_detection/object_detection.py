@@ -10,7 +10,7 @@ class ObjectRecognizer():
     """
 
     _FPS = 5
-    CONFIG_DIR = os.environ.get("CONFIG_DIR", "/outputs")
+    CONFIG_DIR = os.environ.get("CONFIG_DIR", "/arifacts")
     ARTIFACTS_DIR = os.environ.get("ARTIFACTS_DIR", "/outputs")
     cap = None
     out = None
