@@ -12,24 +12,26 @@ In order to run this project you will need to download 3 missing files:
 2.  `yolov3.cfg` - https://github.com/pjreddie/darknet/blob/master/cfg/yolov3.cfg - config file for the model - can get this here .
 3.  `yolov3.weights` - https://pjreddie.com/media/files/yolov3.weights - weights for the model.
 
-Once these are downloaded, place them in an `artifacts` folder - ypu should have a foolder structure like the following:
+Once these are downloaded, place them in an `artifacts/config` folder - ypu should have a folder structure like the following:
 
 
 ```
 ├── README.md
 ├── artifacts
-│   ├── coco.names
-│   ├── yolov3.cfg
-│   └── yolov3.weights
+│   ├── config
+│   │   ├── coco.names
+│   │   ├── yolov3.cfg
+│   │   └── yolov3.weights
+│   └── outputs
 ├── docker-compose.yml
 └── src
     ├── Dockerfile
     ├── __init__.py
     ├── main.py
     ├── obj_detection
-    │   ├── __init__.py
-    │   ├── object_detection.py
-    │   └── routes.py
+    │   ├── __init__.py
+    │   ├── object_detection.py
+    │   └── routes.py
     └── requirements.txt
 ```
 
